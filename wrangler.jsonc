@@ -1,0 +1,13 @@
+{
+  // The Worker/project name — lowercase, simple. Becomes part of your URL.
+  "name": "archive",
+
+  // Which Workers runtime behaviour to use. Any recent date is fine.
+  "compatibility_date": "2026-07-01",
+
+  // The important line: serve the built site in dist/ as static files.
+  // This is the Workers equivalent of the old Pages "build output directory".
+  "assets": {
+    "directory": "./dist"
+  }
+}
