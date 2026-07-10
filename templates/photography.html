@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Archive — Photography{% endblock %}
+
+{% block content %}
+  <div class="section-head">Photography</div>
+
+  {% for set in sets %}
+  <a class="shoot" href="/photography/{{ set.slug }}/">
+    <div class="cover">
+      {% if set.cover %}<img src="/photography/{{ set.slug }}/{{ set.cover }}" alt="{{ set.title }}">{% endif %}
+    </div>
+    <div class="shoot-meta">
+      <div class="stitle">{{ set.title }}</div>
+      <div class="smeta">
+        {% if set.location %}{{ set.location }} &nbsp;·&nbsp; {% endif %}{{ set.date_str }}
+        &nbsp;·&nbsp; {{ set.count }} frame{{ 's' if set.count != 1 }}
+      </div>
+    </div>
+  </a>
+  {% endfor %}
+{% endblock %}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Archive{% endblock %}</title>
+
+  <!-- Jost stands in for Futura (headings); Courier Prime is the typewriter body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="doc">
+
+  <!-- Full-width bands: the border lives on the band (edge to edge),
+       the .wrap inside keeps the actual content in the centred column. -->
+  <header class="masthead">
+    <div class="wrap">
+      <a class="wordmark" href="/">Archive<span class="dot">.</span></a>
+    </div>
+  </header>
+
+  <nav class="navbar">
+    <div class="wrap nav-inner">
+      <a href="/" class="{{ 'active' if active == 'projects' }}">Projects</a>
+      <a href="/photography/" class="right {{ 'active' if active == 'photography' }}">Photography</a>
+      <a href="/about/" class="{{ 'active' if active == 'about' }}">About</a>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="colophon">
+    <div class="wrap">REVISED {{ site.revised }} &nbsp;·&nbsp; {{ site.coords }}</div>
+  </footer>
+
+</div>
+</body>
+</html>

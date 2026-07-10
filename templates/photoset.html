@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}{{ set.title }} — Archive{% endblock %}
+
+{% block content %}
+  <a class="back" href="/photography/">&larr; Return to photography</a>
+
+  <div class="proj-head">
+    <div class="proj-eyebrow">
+      {%- if set.location %}{{ set.location }} &nbsp;·&nbsp; {% endif -%}
+      {{ set.date_str }} &nbsp;·&nbsp; {{ set.count }} frame{{ 's' if set.count != 1 }}
+    </div>
+    <h1>{{ set.title }}</h1>
+    <hr class="rule2">
+  </div>
+
+  {% if set.body_html %}
+  <div class="prose">{{ set.body_html | safe }}</div>
+  {% endif %}
+
+  <!-- The contact sheet. Frames marked `select: true` in frontmatter
+       are printed larger, the way you'd enlarge the keepers off a sheet. -->
+  <div class="contact">
+    {% for frame in set.frames %}
+    <div class="frame {{ 'sel' if frame.select }}">
+      <img src="{{ frame.src }}" alt="Frame {{ loop.index }}" loading="lazy">
+      <span>{{ "%02d"|format(loop.index) }}</span>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="eod">— End of Sheet —</div>
+{% endblock %}

@@ -1,0 +1,327 @@
+/* ============================================================
+   ARCHIVE — stylesheet
+   Grey on grey. Geometric sans caps (Jost) for headings, a
+   typewriter face (Courier Prime) for body and data, one hit of
+   international orange as the only colour on the page.
+
+   All appearance lives here. build.py never touches this file —
+   restyle the whole site by editing the variables below.
+   ============================================================ */
+:root {
+  /* palette — monochrome greys + one accent */
+  --bg:       #b9bab6;   /* the desk the document sits on */
+  --paper:    #cfd0cc;   /* document grey — cool, not warm */
+  --paper-2:  #c3c4c0;   /* slightly darker field */
+  --ink:      #26282a;   /* near-black print */
+  --grey:     #5f6266;   /* secondary text */
+  --rule:     #9fa19d;   /* hairlines */
+  --accent:   #c4501b;   /* international orange — used sparingly */
+
+  /* type — the two voices */
+  --caps: "Jost", Futura, "Century Gothic", "Trebuchet MS", sans-serif;
+  --type: "Courier Prime", "Courier New", Courier, monospace;
+
+  --page:    76rem;      /* overall content width — widen or narrow the site here */
+  --measure: 42rem;      /* reading width for long prose only (keeps lines legible) */
+}
+
+* { box-sizing: border-box; margin: 0; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  background: var(--paper);   /* the paper now fills the whole window */
+  color: var(--ink);
+  font-family: var(--type);
+  line-height: 1.62;
+  min-height: 100vh;
+}
+
+/* ---- layout: full-width bands, centred content column ---------- */
+/* .doc spans the window. .wrap is the centred column that keeps
+   content aligned; full-width bands (header/nav/footer) put their
+   border on the band itself so the rule runs edge to edge. */
+.doc { width: 100%; }
+.wrap {
+  max-width: var(--page);
+  margin: 0 auto;
+  padding-inline: clamp(1.25rem, 4vw, 3.5rem);
+}
+main.wrap { padding-bottom: 4rem; }
+
+/* ---- masthead (full-width band) -------------------------------- */
+.masthead {
+  padding: 1.6rem 0 1.6rem;
+  border-bottom: 1px solid var(--ink);   /* runs the full page width */
+}
+.wordmark {
+  display: inline-block;
+  font-family: var(--caps);
+  font-weight: 500;
+  font-size: clamp(2rem, 7vw, 3.2rem);
+  letter-spacing: 0.42em;
+  text-indent: 0.42em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--ink);
+  text-decoration: none;
+}
+.wordmark .dot { color: var(--accent); }
+
+/* ---- nav (full-width band) ------------------------------------- */
+.navbar {
+  border-bottom: 1px solid var(--rule);   /* runs the full page width */
+  margin-bottom: 2.2rem;
+}
+.nav-inner {
+  display: flex;
+  gap: 2rem;
+  font-family: var(--caps);
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  padding-top: 0.9rem;
+  padding-bottom: 0.9rem;
+}
+nav a {
+  color: var(--grey);
+  text-decoration: none;
+  padding-bottom: 0.15rem;
+  border-bottom: 2px solid transparent;
+  transition: color 0.18s ease, border-color 0.18s ease;
+}
+nav a:hover { color: var(--ink); }
+nav a.active { color: var(--ink); border-bottom-color: var(--accent); }
+nav a.right { margin-left: auto; }
+nav a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* ---- section heading with trailing rule ------------------------ */
+.section-head {
+  font-family: var(--caps);
+  font-size: 0.68rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--ink);
+  display: flex; align-items: center; gap: 1rem;
+  margin-bottom: 0.2rem;
+}
+.section-head::after { content: ""; flex: 1; border-top: 1px solid var(--rule); }
+
+/* ---- tag filter row (index) ------------------------------------ */
+.tagrow { display: flex; flex-wrap: wrap; gap: 0.5rem 1.4rem; margin-bottom: 2.2rem; }
+.tagrow a {
+  font-family: var(--caps);
+  font-size: 0.66rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--grey);
+  text-decoration: none;
+  cursor: pointer;
+  padding-bottom: 0.15rem;
+  border-bottom: 2px solid transparent;
+  transition: color 0.18s ease, border-color 0.18s ease;
+}
+.tagrow a:hover { color: var(--ink); }
+.tagrow a.on { color: var(--ink); border-bottom-color: var(--accent); }
+
+/* ---- project listing (index) ----------------------------------- */
+.entry {
+  display: grid;
+  grid-template-columns: 5.4rem 1fr auto;
+  gap: 0 1.2rem;
+  align-items: baseline;
+  padding: 1.05rem 0 0.95rem;
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+}
+.entry .no { font-family: var(--type); font-size: 0.74rem; color: var(--grey); }
+.entry .title {
+  font-family: var(--caps);
+  font-weight: 500;
+  font-size: 1.05rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.35;
+  transition: color 0.18s ease;
+}
+.entry .date { font-family: var(--type); font-size: 0.72rem; color: var(--grey); }
+.entry .summary {
+  grid-column: 2 / 4;
+  font-size: 0.85rem;
+  color: #45484b;
+  margin-top: 0.3rem;
+  max-width: 48rem;
+}
+.entry:hover .title { color: var(--accent); }
+.entry::before {
+  content: "";
+  position: absolute; left: -2.6rem; top: 0; bottom: 0;
+  width: 4px; background: var(--accent);
+  opacity: 0; transition: opacity 0.12s ease;
+}
+.entry:hover::before { opacity: 1; }
+.entry:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+/* ---- project / set document header ----------------------------- */
+.back {
+  font-family: var(--caps); font-size: 0.66rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--accent); text-decoration: none;
+  display: inline-block; margin-bottom: 1.8rem;
+}
+.back:hover { text-decoration: underline; }
+
+.proj-head { margin-bottom: 0.4rem; }
+.proj-eyebrow { font-family: var(--type); font-size: 0.72rem; color: var(--grey); margin-bottom: 0.8rem; }
+.proj-head h1 {
+  font-family: var(--caps);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 4.6vw, 2.3rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.25;
+  max-width: 34rem;
+}
+.rule2 { border: 0; border-top: 2px solid var(--ink); width: 5.5rem; margin: 1.1rem 0 1.2rem; }
+
+/* ---- abstract -------------------------------------------------- */
+.abstract { font-size: 0.88rem; color: #3a3d40; max-width: var(--measure); margin-bottom: 2rem; }
+.abstract b {
+  font-family: var(--caps); font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  font-size: 0.68rem; color: var(--ink);
+  display: block; margin-bottom: 0.3rem;
+}
+
+/* ---- figure ---------------------------------------------------- */
+/* capped to the article column so a wide hero doesn't dwarf the text */
+.figure { margin: 2rem 0 2.2rem; max-width: 50rem; }
+.figbox {
+  aspect-ratio: 16 / 9;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 23px, #bcbdb9 23px 24px),
+    repeating-linear-gradient(0deg,  transparent 0 23px, #bcbdb9 23px 24px),
+    var(--paper-2);
+  border: 1px solid var(--ink);
+  display: grid; place-items: center;
+  overflow: hidden;
+}
+.figbox img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.figbox .ph { font-family: var(--type); font-size: 0.72rem; color: var(--grey); text-align: center; letter-spacing: 0.04em; }
+.figcap { font-family: var(--type); font-size: 0.68rem; color: var(--grey); margin-top: 0.55rem; }
+.figcap b { color: var(--ink); font-weight: 700; }
+
+/* ---- prose ----------------------------------------------------- */
+.prose { max-width: var(--measure); }
+.prose p { margin-bottom: 1.05rem; font-size: 0.9rem; }
+.prose h2, .prose h3 {
+  font-family: var(--caps); font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  font-size: 0.9rem; margin: 1.6rem 0 0.6rem;
+}
+.prose a { color: var(--accent); }
+.prose ul, .prose ol { margin: 0 0 1.05rem 1.2rem; font-size: 0.9rem; }
+.prose code {
+  font-family: var(--type); font-size: 0.85em;
+  background: var(--paper-2); padding: 0.05rem 0.3rem;
+}
+
+/* ---- specification table --------------------------------------- */
+.spec { margin: 2.4rem 0 0.6rem; max-width: 50rem; }
+.spec h2 {
+  font-family: var(--caps); font-size: 0.68rem;
+  letter-spacing: 0.26em; text-transform: uppercase;
+  color: var(--ink); margin-bottom: 0.7rem;
+  display: flex; align-items: center; gap: 1rem;
+}
+.spec h2::after { content: ""; flex: 1; border-top: 1px solid var(--rule); }
+.spec table { width: 100%; border-collapse: collapse; }
+.spec td {
+  font-family: var(--type); font-size: 0.78rem;
+  padding: 0.45rem 0; border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+}
+.spec td:first-child { color: var(--grey); width: 12rem; }
+
+/* ---- photography landing: cover per shoot ---------------------- */
+.shoot {
+  display: grid;
+  grid-template-columns: 13rem 1fr;
+  gap: 0 1.6rem;
+  align-items: start;
+  padding: 1.3rem 0;
+  border-bottom: 1px solid var(--rule);
+  text-decoration: none;
+  color: inherit;
+}
+.shoot .cover {
+  aspect-ratio: 3 / 2;
+  background: var(--paper-2);
+  border: 1px solid var(--ink);
+  overflow: hidden;
+}
+.shoot .cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.shoot .stitle {
+  font-family: var(--caps); font-weight: 500;
+  font-size: 1.05rem; letter-spacing: 0.06em; text-transform: uppercase;
+  line-height: 1.3;
+}
+.shoot .smeta { font-family: var(--type); font-size: 0.72rem; color: var(--grey); margin-top: 0.45rem; }
+.shoot:hover .stitle { color: var(--accent); }
+.shoot:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+/* ---- contact sheet: the darkroom grid, selects enlarged -------- */
+.contact {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-flow: dense;      /* let enlarged selects pack neatly */
+  gap: 6px;
+  padding: 10px;
+  background: #35373a;
+  border: 1px solid var(--ink);
+  margin: 1.4rem 0 0;
+}
+.contact .frame {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  background: repeating-linear-gradient(45deg, #46484c 0 6px, #3e4044 6px 12px);
+  overflow: hidden;
+}
+.contact .frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.contact .frame span {
+  position: absolute; top: 3px; left: 4px;
+  font-family: var(--type); font-size: 0.55rem; color: #d7d9dd;
+  text-shadow: 0 0 3px rgba(0,0,0,0.6);
+}
+/* a select is printed two-up: bigger in the grid, like an enlargement */
+.contact .frame.sel { grid-column: span 2; grid-row: span 2; }
+
+/* ---- closing marks --------------------------------------------- */
+.eod {
+  font-family: var(--caps);
+  font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--grey); text-align: center; margin-top: 2.8rem;
+}
+.colophon {
+  font-family: var(--type); font-size: 0.64rem;
+  color: var(--grey); text-align: center;
+  margin-top: 2.2rem; padding-top: 1rem;
+  border-top: 1px solid var(--rule);   /* runs the full page width */
+}
+
+/* ---- responsive ------------------------------------------------ */
+@media (max-width: 640px) {
+  .doc-inner { padding: 0 1.3rem 2rem; }
+  .entry { grid-template-columns: 3.4rem 1fr; }
+  .entry .date { grid-column: 2; grid-row: 2; }
+  .entry .title { grid-column: 2; }
+  .entry::before { left: -1.3rem; }
+  .shoot { grid-template-columns: 8rem 1fr; }
+  .contact { grid-template-columns: repeat(4, 1fr); }
+  .spec td:first-child { width: 8rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}

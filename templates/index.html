@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Archive — Projects{% endblock %}
+
+{% block content %}
+  <div class="tagrow">
+    <a class="on">All</a><a>Electronics</a><a>Making</a><a>Diving</a><a>Photo</a>
+  </div>
+
+  <div class="section-head">Contents</div>
+
+  {% for project in projects %}
+  <a class="entry" href="/projects/{{ project.slug }}.html">
+    <span class="no">{{ "%03d"|format(loop.revindex) }}</span>
+    <span class="title">{{ project.title }}</span>
+    <span class="date">{{ project.date_str }}</span>
+    <span class="summary">{{ project.summary }}</span>
+  </a>
+  {% endfor %}
+{% endblock %}
