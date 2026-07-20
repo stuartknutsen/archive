@@ -102,7 +102,7 @@ def load_projects():
             "tags":      meta.get("tags", []),          # used for filtering, not shown
             "hero":      meta.get("hero"),              # optional image path
             "spec":      meta.get("spec", {}),          # optional key/value table
-            "body_html": markdown.markdown(body, extensions=["extra"]),
+            "body_html": markdown.markdown(body, extensions=["extra", "pymdownx.tilde"]),
         })
     # newest first; date objects sort correctly
     projects.sort(key=lambda p: p["date"] or date.min, reverse=True)
