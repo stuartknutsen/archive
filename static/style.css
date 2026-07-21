@@ -197,8 +197,8 @@ nav a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 /* ---- figure ---------------------------------------------------- */
 /* capped to the article column so a wide hero doesn't dwarf the text */
 .figure { margin: 2rem 0 2.2rem; max-width: 50rem; }
+
 .figbox {
-  aspect-ratio: 16 / 9;
   background:
     repeating-linear-gradient(90deg, transparent 0 23px, #bcbdb9 23px 24px),
     repeating-linear-gradient(0deg,  transparent 0 23px, #bcbdb9 23px 24px),
@@ -207,7 +207,16 @@ nav a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   display: grid; place-items: center;
   overflow: hidden;
 }
-.figbox img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* only the empty placeholder keeps a fixed 16:9 frame */
+.figbox:not(:has(img)) { aspect-ratio: 16 / 9; }
+
+.figbox img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .figbox .ph { font-family: var(--type); font-size: 0.72rem; color: var(--grey); text-align: center; letter-spacing: 0.04em; }
 .figcap { font-family: var(--type); font-size: 0.68rem; color: var(--grey); margin-top: 0.55rem; }
 .figcap b { color: var(--ink); font-weight: 700; }
@@ -330,3 +339,20 @@ nav a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
 }
+
+/* --- for photo formatting in line in markdown --------------- */
+.prose img,
+.prose figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--ink);
+}
+.prose figure { margin: 1.8rem 0; }
+.prose figcaption {
+  font-family: var(--type);
+  font-size: 0.68rem;
+  color: var(--grey);
+  margin-top: 0.55rem;
+}
+.prose figcaption b { color: var(--ink); font-weight: 700; }
