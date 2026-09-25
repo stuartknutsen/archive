@@ -103,6 +103,7 @@ def load_projects():
             "hero":      meta.get("hero"),              # optional image path
             "spec":      meta.get("spec", {}),          # optional key/value table
             "body_html": markdown.markdown(body, extensions=["extra", "pymdownx.tilde"]),
+            "status":    meta.get("status", "done"),
         })
     # newest first; date objects sort correctly
     projects.sort(key=lambda p: p["date"] or date.min, reverse=True)
@@ -149,8 +150,25 @@ def build():
     for p in projects:
         render("project.html", DIST / "projects" / f"{p['slug']}.html",
                project=p, active="projects")
+
+    done = [p for p in projects if p["status"] != "wip"]
+    wip  = [p for p in projects if p["status"] == "wip"]
+
+    categories = sorted({p["category"] for p in done if p["category"]})
+
     render("index.html", DIST / "index.html",
-           projects=projects, active="projects")
+           projects=done, categories=categories, current="All",
+           active="projects")
+
+    for cat in categories:
+        subset = [p for p in done if p["category"] == cat]
+        slug = cat.lower().replace(" ", "-")
+        render("index.html", DIST / "category" / slug / "index.html",
+               projects=subset, categories=categories, current=cat,
+               active="projects")
+
+    render("index.html", DIST / "wip" / "index.html",
+           projects=wip, categories=[], current=None, active="wip")
 
     # 3. Photography: a cover landing, plus one contact-sheet page per set.
     #    Each set gets its own folder so its images sit beside its HTML and

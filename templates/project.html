@@ -8,6 +8,7 @@
     <div class="proj-eyebrow">
       {%- if project.category %}{{ project.category }} &nbsp;·&nbsp; {% endif -%}
       {{ project.date_str }}
+      {%- if project.status == 'wip' %}In progress &nbsp;·&nbsp; {% endif -%}
     </div>
     <h1>{{ project.title }}</h1>
     <hr class="rule2">

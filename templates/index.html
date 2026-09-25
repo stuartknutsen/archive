@@ -2,9 +2,15 @@
 {% block title %}Archive — Projects{% endblock %}
 
 {% block content %}
+  {% if categories %}
   <div class="tagrow">
-    <a class="on">All</a><a>Electronics</a><a>Making</a><a>Diving</a><a>Photo</a>
+    <a href="/" class="{{ 'on' if current == 'All' }}">All</a>
+    {% for cat in categories %}
+    <a href="/category/{{ cat|lower|replace(' ', '-') }}/"
+       class="{{ 'on' if current == cat }}">{{ cat }}</a>
+    {% endfor %}
   </div>
+  {% endif %}
 
   <div class="section-head">Contents</div>
 
